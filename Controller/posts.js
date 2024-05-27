@@ -21,14 +21,16 @@ const show = (req, res) => {
   // post nel file JSON che corrisponde allo slug passato come parametro nella richiesta
   const post = posts.find((p) => p.slug === req.params.slug);
   if (post) {
-    // Se il post è trovato, creiamo una stringa HTML con i dettagli del post
+    const imageUrl = `${req.protocol}://${req.get('host')}/${post.image}`;
+    console.log('Image URL:', imageUrl);
     let html = '<div>';
-    //Immagine del post, il titolo e il contenuto
+    //Variabile per contenere HTML
     html += `<div>
             <img src="/${post.image}" alt="${post.title}">
             <div class="post-content">
               <h2>${post.title}</h2>
               <p>${post.content}</p>
+               <p><strong>IMAGE URL:</strong> <a href="${imageUrl}" target="_blank">${imageUrl}</a></p>
             </div>
 `;
     html += '</div>';
