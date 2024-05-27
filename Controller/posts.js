@@ -55,5 +55,27 @@ const create = (req, res) => {
   });
 };
 
+// download immagine del post
+const downloadImage = (req, res) => {
+  // Decodifica lo slug
+  const slug = decodeURIComponent(req.params.slug);
+  // Cerca il post nel file JSON che corrisponde allo slug decodificato
+  const post = posts.find((p) => p.slug === slug);
+  //Quando il post viene trovato
+  if (post) {
+    // restituisce il percorso completo dell'immagine
+    const imagePath = path.join(__dirname, '../public', post.image);
+    res.download(imagePath, (err) => {
+      if (err) {
+        // Log errore 500
+        res.status(500).json({ error: "Errore nel download dell'immagine" });
+      }
+    });
+    //post non viene trovato errore 500
+  } else {
+    res.status(404).json({ error: 'Post not found' });
+  }
+};
+
 // Le funzioni devono essere esportate per renderle disponibili in altre parti dell'app
-module.exports = { index, show, create };
+module.exports = { index, show, create, downloadImage };

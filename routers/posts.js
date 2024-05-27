@@ -11,6 +11,7 @@ router.get('/', postController.index);
 router.get('/create', postController.create);
 //chiama la funzione show del controller dei post
 router.get('/:slug', postController.show);
+router.get('/:slug/download', postController.downloadImage);
 
 // esportiamo il router per renderlo disponibile in altre parti dell'app
 module.exports = router;
